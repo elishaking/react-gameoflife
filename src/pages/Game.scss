@@ -12,3 +12,45 @@
   background: #ccc;
   position: absolute;
 }
+
+.controls {
+  display: flex;
+  margin-top: 2em;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin-left: 0.3em;
+  }
+
+  label,
+  input,
+  button {
+    margin-left: 2em;
+    padding: 0.3em 0.7em;
+    outline: none;
+    border: none;
+    font-family: inherit;
+    border-radius: 5px;
+  }
+
+  input {
+    border: 1px solid gray;
+    transition: 0.3s ease-in-out;
+  }
+
+  input:focus {
+    box-shadow: 1px 1px 7px 1px #0000004f;
+  }
+
+  button {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+}

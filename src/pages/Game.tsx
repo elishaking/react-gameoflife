@@ -208,7 +208,7 @@ export default class Game extends Component {
             value={this.state.interval}
             onChange={this.handleIntervalChange}
           />
-          msec
+          <span>msec</span>
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
               Stop
