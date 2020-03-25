@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import "./Game.scss";
 import { HEIGHT, CELL_SIZE, WIDTH } from "../global/constants";
+import Cell from "../components/Cell";
 
 interface Cell {
   x: number;
   y: number;
+}
+
+interface GameState {
+  cells: any[];
 }
 
 export default class Game extends Component {
@@ -13,7 +18,7 @@ export default class Game extends Component {
   board: boolean[][];
   boardRef: HTMLDivElement | any;
 
-  state = {
+  state: GameState = {
     cells: []
   };
 
@@ -76,20 +81,26 @@ export default class Game extends Component {
   };
 
   render() {
+    const { cells } = this.state;
+
     return (
-      <div
-        className="Board"
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`
-        }}
-        onClick={this.handleClick}
-        ref={n => {
-          this.boardRef = n;
-        }}
-      >
-        <h1>Game</h1>
+      <div>
+        <div
+          className="Board"
+          style={{
+            width: WIDTH,
+            height: HEIGHT,
+            backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`
+          }}
+          onClick={this.handleClick}
+          ref={n => {
+            this.boardRef = n;
+          }}
+        >
+          {cells.map(cell => (
+            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+          ))}
+        </div>
       </div>
     );
   }
