@@ -8,7 +8,14 @@ const HEIGHT = 600;
 export default class Game extends Component {
   render() {
     return (
-      <div className="Board" style={{ width: WIDTH, height: HEIGHT }}>
+      <div
+        className="Board"
+        style={{
+          width: WIDTH,
+          height: HEIGHT,
+          backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`
+        }}
+      >
         <h1>Game</h1>
       </div>
     );
