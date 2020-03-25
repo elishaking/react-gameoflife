@@ -10,6 +10,8 @@ interface Cell {
 
 interface GameState {
   cells: any[];
+  interval: number;
+  isRunning: boolean;
 }
 
 export default class Game extends Component {
@@ -17,9 +19,12 @@ export default class Game extends Component {
   cols: number;
   board: boolean[][];
   boardRef: HTMLDivElement | any;
+  intervalHandle: number | null = null;
 
   state: GameState = {
-    cells: []
+    cells: [],
+    interval: 100,
+    isRunning: false
   };
 
   constructor(props: {}) {
@@ -80,8 +85,45 @@ export default class Game extends Component {
     this.setState({ cells: this.makeCells() });
   };
 
+  iteration = () => {
+    console.log("running iteration...");
+    let newBoard = this.makeEmptyBoard();
+    this.board = newBoard;
+    this.setState({ cells: this.makeCells() });
+  };
+
+  runIteration() {
+    // this.intervalHandle = window.setTimeout(() => {
+    //   this.runIteration();
+    // }, this.state.interval);
+
+    this.intervalHandle = window.setInterval(
+      this.iteration,
+      this.state.interval
+    );
+  }
+
+  runGame = () => {
+    this.setState({ isRunning: true });
+
+    this.runIteration();
+  };
+
+  stopGame = () => {
+    this.setState({ isRunning: false });
+
+    if (this.intervalHandle) {
+      window.clearInterval(this.intervalHandle);
+      this.intervalHandle = null;
+    }
+  };
+
+  handleIntervalChange = (event: any) => {
+    this.setState({ interval: event.target.value });
+  };
+
   render() {
-    const { cells } = this.state;
+    const { cells, isRunning } = this.state;
 
     return (
       <div>
@@ -100,6 +142,25 @@ export default class Game extends Component {
           {cells.map(cell => (
             <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
+        </div>
+
+        <div className="controls">
+          <label htmlFor="interval">Update every:</label>
+          <input
+            name="interval"
+            value={this.state.interval}
+            onChange={this.handleIntervalChange}
+          />
+          msec
+          {isRunning ? (
+            <button className="button" onClick={this.stopGame}>
+              Stop
+            </button>
+          ) : (
+            <button className="button" onClick={this.runGame}>
+              Run
+            </button>
+          )}
         </div>
       </div>
     );
