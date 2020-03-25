@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import "./Game.scss";
-
-const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+import { HEIGHT, CELL_SIZE, WIDTH } from "../global/constants";
 
 interface Cell {
   x: number;
